@@ -1,2 +1,7 @@
 secret/key.txt
 Структура/Master GPT.xmind
+secret/*
+Структура/*
+tests/*
+run_test.py
+*.pyc
