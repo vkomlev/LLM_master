@@ -5,3 +5,4 @@ secret/*
 tests/*
 run_test.py
 *.pyc
+settings.py
