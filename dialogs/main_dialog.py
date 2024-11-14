@@ -11,10 +11,10 @@ class MainDialog:
         }
         # Список задач
         self.tasks = {
-            "analyze_and_format": """Присылаю тебе распознанный текст PDF документа. 
-            Так как текст был распознан, в нем возможны опечатки, нарушение последовательности повествования, неправильное форматирование. 
-            Твоя задача: проанализировать контент и сформировать форматированный, логически последовательный текст без ошибок, максимально близкий по смыслу к оригиналу.""",
-            "summarize_text": "перескажи текст. Ответ должен быть из 10 предложений."
+            "analyze_and_format": 
+                "Ранее отправлял тебе фраменты распознанного текста PDF документа. Так как текст был распознан, в нем возможны опечатки, нарушение последовательности повествования, неправильное форматирование.  Твоя задача: проанализировать контент и сформировать  форматированный, логически последовательный текст без ошибок, максимально близкий по смыслу к оригиналу. Приступай!",
+            "summarize_text": 
+                "перескажи текст. Ответ должен быть из 10 предложений."
         }
 
     def form_context(self, fragments, task_name, role_name):
@@ -34,12 +34,15 @@ class MainDialog:
         messages.append({"role": "system", "content": role_description})
         
         # Добавляем сообщение о начале передачи фрагментов
-        intro_message = "Я буду тебе присылать фрагменты произведения, ничего не делай, просто запоминай."
-        messages.append({"role": "assistant", "content": intro_message})
-        
+        intro_message = "Я буду тебе присылать фрагменты текста, ничего не делай, просто запоминай."
+        messages.append({"role": "user", "content": intro_message})
+        answer_intro = "Хорошо, жду"
+        messages.append({"role": "assistant", "content": answer_intro})
         # Добавляем фрагменты
         for i, fragment in enumerate(fragments):
             messages.append({"role": "user", "content": f"Фрагмент {i+1}: {fragment}"})
+            answer_intro = "Я запомнил, шли дальше"
+            messages.append({"role": "assistant", "content": answer_intro})
         
         # Добавляем задание
         task_message = self.tasks.get(task_name, "Выполни задание.")
